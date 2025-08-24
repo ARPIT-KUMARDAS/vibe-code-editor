@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import UserButton from "@/modules/auth/components/user.button";
+import { User } from "lucide-react";
 import Image from "next/image";
 
 export default async function Home() {
@@ -8,6 +10,9 @@ export default async function Home() {
       <Button >
         Get Start
       </Button>
+      <UserButton>
+        
+      </UserButton>
     </div>
   );
 }
