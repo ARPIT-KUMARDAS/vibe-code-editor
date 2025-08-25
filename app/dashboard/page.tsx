@@ -17,14 +17,15 @@ const Page = async() => {
       <div className='mt-10 flex flex-col  justify-center items-center w-full'>
        {
         playgrounds && playgrounds.length > 0 ? (
-          <EmptyState/>
-        ):(
           <ProjectTable
           projects={playgrounds || []}
           onDeleteProject = {()=>{}}
           onUpdateProject = {()=>{}}
           onDuplicateProject = {()=>{}}  
           />
+         
+        ):(
+           <EmptyState/>
         )
        }
       </div>
