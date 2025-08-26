@@ -306,7 +306,7 @@ const filteredTemplates = templates.filter((template)=>{
 
                         <div className="flex gap-4">
                           <div
-                            className="relative w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-full"
+                            className="relative w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-full template-icon-bg"
                             style={{ backgroundColor: `${template.color}15`}}
                           >
                             <Image

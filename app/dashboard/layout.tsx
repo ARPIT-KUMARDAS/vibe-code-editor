@@ -10,6 +10,7 @@ export default async function DashboardLayout({
 
   const playgroundData = await getAllPlaygroudForUser();
 
+  console.log("playground",playgroundData);
   
   const technologyIconMap: Record<string, string> = {
     REACT: "Zap",
@@ -24,7 +25,7 @@ export default async function DashboardLayout({
     id:item.id,
     name:item.title,
     //todo star
-    starred:false,
+    starred:item.Starmark?.[0]?.IsMarked || false,
     icon:technologyIconMap[item.template] || "code2",
   })
 )
