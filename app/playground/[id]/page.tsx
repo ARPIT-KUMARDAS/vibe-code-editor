@@ -15,7 +15,6 @@ const MainPlaygroundPage = () => {
 
     const activeFile ="sample.txt"
 
-
     console.log("templateData",templateData);
     console.log("playgroundData", playgroundData)
   return (
