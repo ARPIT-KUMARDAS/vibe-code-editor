@@ -20,6 +20,17 @@ export interface ConfirmationDialogProps {
   setIsOpen: (open: boolean) => void
 }
 
+/**
+ * Renders a confirmation modal with a title, optional description, and Cancel/Confirm actions.
+ *
+ * The dialog is controlled by `isOpen`; changes to open state call `setIsOpen`. Clicking the
+ * confirm or cancel buttons invokes `onConfirm` and `onCancel` respectively. Button labels can
+ * be customized via `confirmLabel` and `cancelLabel` (defaulting to `"Confirm"` and `"Cancel"`).
+ *
+ * @param confirmLabel - Custom label for the confirm button; defaults to `"Confirm"`.
+ * @param cancelLabel - Custom label for the cancel button; defaults to `"Cancel"`.
+ *
+ */
 export function ConfirmationDialog({
   isOpen,
   title,

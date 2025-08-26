@@ -19,6 +19,19 @@ interface NewFolderDialogProps {
     onCreateFolder: (folderName: string) => void
   }
 
+  /**
+   * Renders a modal dialog that allows the user to create a new folder.
+   *
+   * The dialog provides a single input for the folder name. Submitting with a non-empty
+   * trimmed name invokes `onCreateFolder` with that name and clears the input. The
+   * "Create" button is disabled while the input is empty or contains only whitespace.
+   * `onClose` is used to close the dialog and is wired to the dialog's open state.
+   *
+   * @param isOpen - Whether the dialog is currently open.
+   * @param onClose - Callback to close the dialog.
+   * @param onCreateFolder - Callback invoked with the trimmed folder name when the form is submitted.
+   * @returns A JSX element representing the "Create New Folder" modal dialog.
+   */
   function NewFolderDialog({ isOpen, onClose, onCreateFolder }: NewFolderDialogProps) {
     const [folderName, setFolderName] = React.useState("")
   

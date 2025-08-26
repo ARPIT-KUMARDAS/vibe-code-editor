@@ -20,6 +20,19 @@ interface RenameFolderDialogProps {
   currentFolderName: string;
 }
 
+/**
+ * Modal dialog component that lets the user rename a folder.
+ *
+ * When opened, the input is initialized/reset to `currentFolderName`. Submitting the form
+ * calls `onRename` with the trimmed folder name (only if non-empty). The dialog is controlled
+ * by `isOpen` and closed via `onClose` (also wired to the Cancel button).
+ *
+ * @param isOpen - Whether the dialog is open.
+ * @param onClose - Callback to close the dialog.
+ * @param onRename - Callback invoked with the new folder name when the form is submitted.
+ * @param currentFolderName - The folder name shown in the input when the dialog opens.
+ * @returns The RenameFolderDialog React element.
+ */
 function RenameFolderDialog({
   isOpen,
   onClose,
