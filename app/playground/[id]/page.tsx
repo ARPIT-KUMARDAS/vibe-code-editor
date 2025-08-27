@@ -3,27 +3,49 @@
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import { TemplateFileTree } from '@/modules/playground/components/playground-explorer';
+import { useFileExplorer } from '@/modules/playground/hooks/useFileExplorer';
 import { usePlayground } from '@/modules/playground/hooks/usePlayground';
+import { TemplateFile } from '@prisma/client';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import { Sidebar } from 'lucide-react';
 import { useParams } from 'next/navigation'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const MainPlaygroundPage = () => {
     const {id} = useParams<{id:string}>();
     const {playgroundData, templateData,isLoading,error,saveTemplateData }=usePlayground(id)
+    const {
+      setTemplateData,
+      setActiveFileId,
+      setPlaygroundId,
+      setOpenFiles,
+      activeFileId,
+      closeAllFiles,
+      closeFile,
+      openFile,
+      openFiles,
+    } = useFileExplorer()
 
-    const activeFile ="sample.txt"
+     useEffect(()=>{setPlaygroundId(id)},[id, setPlaygroundId]);
 
+     useEffect(() => {
+         if (templateData && !openFiles.length) {
+           setTemplateData(templateData);
+        }
+      }, [templateData, setTemplateData, openFiles.length]);
 
-    console.log("templateData",templateData);
-    console.log("playgroundData", playgroundData)
+  const activeFile = openFiles.find((file) => file.id === activeFileId);
+  const hasUnsavedChanges = openFiles.some((file) => file.hasUnsavedChanges);
+
+  const handleFileSelect = (file:TemplateFile) => {
+    openFile(file);
+  };
   return (
     <TooltipProvider>
         <>
          <TemplateFileTree
           data={templateData!}
-          onFileSelect={()=>{}}
+          onFileSelect={handleFileSelect}
           selectedFile={activeFile}
           title="File Explorer"
           onAddFile={()=>{}}
