@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,6 +11,8 @@ import PlaygroundEditor from '@/modules/playground/components/playground-editor'
 import { TemplateFileTree } from '@/modules/playground/components/playground-explorer';
 import { useFileExplorer } from '@/modules/playground/hooks/useFileExplorer';
 import { usePlayground } from '@/modules/playground/hooks/usePlayground';
+import WebContainerPreview from '@/modules/web-containers/components/webcontainer-preview';
+import { useWebContainer } from '@/modules/web-containers/hooks/useWebContainer';
 import { TemplateFile } from '@prisma/client';
 import { Tabs } from '@radix-ui/react-tabs';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
@@ -34,6 +36,15 @@ const MainPlaygroundPage = () => {
       openFile,
       openFiles,
     } = useFileExplorer()
+
+    const {
+      serverUrl,
+      isLoading:containerLoading,
+      error:containerError,
+      instance,
+      writeFileSync
+       //@ts-ignore
+    }=useWebContainer({templateData})
 
      useEffect(()=>{setPlaygroundId(id)},[id, setPlaygroundId]);
 
@@ -84,7 +95,7 @@ const MainPlaygroundPage = () => {
 
                </div>
                  <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                     <Button
                       size="sm"
                       variant="outline"
@@ -98,7 +109,7 @@ const MainPlaygroundPage = () => {
                 </Tooltip>
 
                 <Tooltip>
-                  <TooltipTrigger asChild>
+                  <TooltipTrigger  >
                     <Button
                       size="sm"
                       variant="outline"
@@ -197,6 +208,25 @@ const MainPlaygroundPage = () => {
                       onContentChange={()=>{}}
                       
                       />
+
+                      {
+                         isPreviewVisible && (
+                          <>
+                           <ResizableHandle />
+                           <ResizablePanel  defaultSize={50}>
+                             <WebContainerPreview 
+                              templateData={templateData}
+                              instance={instance}
+                              writeFileSync={writeFileSync}
+                              isLoading={containerLoading}
+                              error={containerError}
+                              serverUrl={serverUrl!}
+                              forceResetup={false}
+                          />
+                           </ResizablePanel>
+                          </>
+                         )
+                      }
                     </ResizablePanel>
                   </ResizablePanelGroup>
                 </div>
