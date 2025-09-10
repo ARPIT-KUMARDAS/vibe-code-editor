@@ -4,8 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Session } from "inspector/promises";
 
-  import {SessionProvider } from "next-auth/react"; 
-  import {auth } from "@/auth";
+import {SessionProvider } from "next-auth/react"; 
+import {auth } from "@/auth";
 import { ThemeProvider } from "@/components/providers/theme-providers";
 import { Toaster } from "sonner";
 
