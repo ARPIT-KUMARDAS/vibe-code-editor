@@ -44,7 +44,7 @@ const MainPlaygroundPage = () => {
       instance,
       writeFileSync
        //@ts-ignore
-    }=useWebContainer({templateData})
+    } = useWebContainer({templateData})
 
      useEffect(()=>{setPlaygroundId(id)},[id, setPlaygroundId]);
 
@@ -60,6 +60,10 @@ const MainPlaygroundPage = () => {
   const handleFileSelect = (file:TemplateFile) => {
     openFile(file);
   };
+  function updateFileContent(activeFileId: string, value: string): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <TooltipProvider>
         <>
@@ -200,39 +204,41 @@ const MainPlaygroundPage = () => {
                   </Tabs>
                 </div>
                 <div className="flex-1">
-                  <ResizablePanelGroup direction="horizontal" className="h-full">
-                    <ResizablePanel defaultSize={isPreviewVisible? 50: 100}>
-                      <PlaygroundEditor 
-                      activeFile={activeFile}
-                      content={activeFile?.content || ""}
-                      onContentChange={()=>{}}
-                      
+                  <ResizablePanelGroup
+                    direction="horizontal"
+                    className="h-full"
+                  >
+                    <ResizablePanel defaultSize={isPreviewVisible ? 50 : 100}>
+                      <PlaygroundEditor
+                        activeFile={activeFile}
+                        content={activeFile?.content || ""}
+                        onContentChange={(value) => 
+                          activeFileId && updateFileContent(activeFileId , value)
+                        }
                       />
-
-                      {
-                         isPreviewVisible && (
-                          <>
-                           <ResizableHandle />
-                           <ResizablePanel  defaultSize={50}>
-                             <WebContainerPreview 
-                              templateData={templateData}
-                              instance={instance}
-                              writeFileSync={writeFileSync}
-                              isLoading={containerLoading}
-                              error={containerError}
-                              serverUrl={serverUrl!}
-                              forceResetup={false}
-                          />
-                           </ResizablePanel>
-                          </>
-                         )
-                      }
                     </ResizablePanel>
+
+                    {isPreviewVisible && (
+                      <>
+                        <ResizableHandle />
+                        <ResizablePanel defaultSize={50}>
+                          <WebContainerPreview
+                            templateData={templateData}
+                            instance={instance}
+                            writeFileSync={writeFileSync}
+                            isLoading={containerLoading}
+                            error={containerError}
+                            serverUrl={serverUrl!}
+                            forceResetup={false}
+                          />
+                        </ResizablePanel>
+                      </>
+                    )}
                   </ResizablePanelGroup>
                 </div>
-                </div>
-            ):(
-            <div className="flex flex-col h-full items-center justify-center text-muted-foreground gap-4">
+              </div>
+            ) : (
+              <div className="flex flex-col h-full items-center justify-center text-muted-foreground gap-4">
                 <FileText className="h-16 w-16 text-gray-300" />
                 <div className="text-center">
                   <p className="text-lg font-medium">No files open</p>
@@ -243,11 +249,10 @@ const MainPlaygroundPage = () => {
               </div>
             )}
           </div>
-           
         </SidebarInset>
-        </>
+      </>
     </TooltipProvider>
-  )
-}
+  );
+};
 
-export default MainPlaygroundPage
+export default MainPlaygroundPage;

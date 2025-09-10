@@ -15,9 +15,8 @@ interface UseWebContaierReturn {
   destory: () => void;
 }
 
-export const useWebContainer = ({
-  templateData,
-}: UseWebContainerProps): UseWebContaierReturn => {
+
+export const useWebContainer = ({ templateData,}: UseWebContainerProps): UseWebContaierReturn => {
   const [serverUrl, setServerUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,8 +56,7 @@ export const useWebContainer = ({
     };
   }, []);
 
-  const writeFileSync = useCallback(
-    async (path: string, content: string): Promise<void> => {
+  const writeFileSync = useCallback(async (path: string, content: string): Promise<void> => {
       if (!instance) {
         throw new Error("WebContainer instance is not available");
       }
@@ -74,7 +72,7 @@ export const useWebContainer = ({
         await instance.fs.writeFile(path, content);
       } catch (err) {
         const errorMessage =
-        err instanceof Error ? err.message : "Failed to write file";
+          err instanceof Error ? err.message : "Failed to write file";
         console.error(`Failed to write file at ${path}:`, err);
         throw new Error(`Failed to write file at ${path}: ${errorMessage}`);
       }
